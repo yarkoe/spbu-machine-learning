@@ -5,7 +5,7 @@ from typing import List
 DATASET_PATH = "dataset/dataset.csv"
 FOLDS_NUMBER = 5
 TARGET_COLUMN_NUMBER = 53
-EPSILON = 0.00005
+EPSILON = 0.1
 
 
 def normalize_column(column: pd.Series):
@@ -35,7 +35,7 @@ def create_folds(data: pd.DataFrame, number) -> List[pd.DataFrame]:
 def get_gradient(matrix_x, column_y, weights):
     internal = column_y - np.dot(matrix_x, weights)
     internal = internal.transpose()
-    return -2 * np.dot(internal, matrix_x)
+    return (-2 / matrix_x.shape[0]) * np.dot(internal, matrix_x)
 
 
 def gradient_descend_step(matrix_x, column_y, weights, k):
@@ -43,7 +43,7 @@ def gradient_descend_step(matrix_x, column_y, weights, k):
     norm = np.linalg.norm(gradient)
     gradient_dir = gradient / norm
 
-    return weights - (1 / k) * gradient_dir
+    return weights - (1 / np.math.log(k + 2)) * gradient_dir
 
 
 def length_between(v1, v2):
