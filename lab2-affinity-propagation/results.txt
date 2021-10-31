@@ -1,0 +1,3 @@
+Train user count: 1500
+Average: 1.280393534785664
+Dispersion: 6.5995242302321495
